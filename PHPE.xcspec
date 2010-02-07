@@ -1,1 +1,14 @@
-/Developer/Library/Xcode/Specifications/PHPE.xcspec
+(
+	{
+		Type = FileType;
+		Identifier = "sourcecode.phpe";
+		BasedOn = sourcecode;
+		Name = "PHP (Enormego) file";
+		Extensions = (
+			php5,
+			php4,
+			php,
+		);
+		Language = "xcode.lang.phpe";
+	},
+)
