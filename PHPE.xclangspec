@@ -1,787 +1,735 @@
-// PHP lang specs
 (
-
-/****************************************************************************/
-// MARK: Javadoc
-/****************************************************************************/
-
-    {
-        Identifier = "xcode.lang.phpe.comment.phpdoc.keyword";
-        Syntax = {
-            StartChars = "@";
-            Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            Words = (
-	            "@author",
-	            "@package",
-	            "@license",
-	            "@copyright",
-                "@deprecated",
-                "@docRoot",
-                "@exception",
-                "@inheritDoc",
-                "@link",
-                "@linkplain",
-                "@param",
-                "@return",
-                "@see",
-                "@serial",
-                "@serialData",
-                "@serialField",
-                "@since",
-                "@throws",
-                "@value",
-                "@version"
-            );
-            Type = "xcode.syntax.comment.doc.keyword";
-        };
-    },
-    {
-        Identifier = "xcode.lang.phpe.comment.phpdoc";
-        Syntax = {
-            Start = "/**";
-            End = "*/";
-            Foldable = YES;
-            IncludeRules = ( "xcode.lang.phpe.comment.phpdoc.keyword", "xcode.lang.url", "xcode.lang.url.mail", "xcode.lang.comment.mark" );
-            Type = "xcode.syntax.comment.doc";
-        };
-    },
-    {
-        // Handle the degenerate case of '/**/' comments. They look like the start of a JavaDoc comment, but they aren't.
-        Identifier = "xcode.lang.phpe.comment.degenerate";
-        Syntax = {
-            StartChars = "/";
-            Chars = "/*";
-            Words = ( "/**/" );
-            Type = "xcode.syntax.comment";
-        };
-    },
-
-
-/****************************************************************************/
-// MARK: PHP Keywords
-/****************************************************************************/
-
-    {
-        Identifier = "xcode.lang.phpe.identifier";
-        Syntax = {
-            StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-            Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
-            Words = (
-	 			"global",
-				"AND",
-				"and",
-				"xor",
-				"XOR",
-				"or",
-				"OR",
-				"new",
-				"static",
-				"CONST",
-				"const",
-				"resource",
-				"NULL",
-				"null",
-				"if",
-				"else",
-				"elseif",
-				"endif",
-				"while",
-				"endwhile",
-				"do",
-				"for",
-				"endfor",
-				"foreach",
-				"endforeach",
-				"as",
-				"break",
-				"continue",
-				"switch",
-				"case",
-				"default",
-				"endswitch",
-				"declare",
-				"enddeclare",
-				"return",
-				"require",
+	{
+		Identifier = "xcode.lang.php.comment.phpdoc.keyword";
+		Syntax = {
+			StartChars = "@";
+			Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			Words = (
+				"@author",
+				"@package",
+				"@license",
+				"@copyright",
+				"@deprecated",
+				"@docRoot",
+				"@exception",
+				"@inheritDoc",
+				"@link",
+				"@linkplain",
+				"@param",
+				"@return",
+				"@see",
+				"@serial",
+				"@serialData",
+				"@serialField",
+				"@since",
+				"@throws",
+				"@value",
+				"@version",
+			);
+			Type = "xcode.syntax.comment.doc.keyword";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.comment.phpdoc";
+		Syntax = {
+			Start = "/**";
+			End = "*/";
+			Foldable = YES;
+			IncludeRules = (
+				"xcode.lang.url",
+				"xcode.lang.url.mail",
+				"xcode.lang.comment.mark",
+				"xcode.lang.php.comment.phpdoc.keyword",
+			);
+			Type = "xcode.syntax.comment.doc";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.comment.degenerate";
+		Syntax = {
+			StartChars = "/";
+			Chars = "/*";
+			Words = (
+				"/**/",
+			);
+			Type = "xcode.syntax.comment";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.identifier";
+		Syntax = {
+			StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+			Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+			Words = (
+				global,
+				new,
+				static,
+				CONST,
+				const,
+				resource,
+				NULL,
+				null,
+				function,
+				abstract,
+				final,
+				class,
+				public,
+				private,
+				protected,
+				implements,
+				extends,
+				parent,
+				true,
+				false,
+				TRUE,
+				FALSE,
+				YES,
+				NO,
+				new,
+			);
+			Type = "xcode.syntax.keyword";
+			AltType = "xcode.syntax.identifier";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.systemIdentifier";
+		Syntax = {
+			StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+			Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+			Words = (
+				AND,
+				and,
+				xor,
+				XOR,
+				or,
+				OR,
+				as,
+				break,
+				continue,
+				switch,
+				case,
+				default,
+				endswitch,
+				declare,
+				enddeclare,
+				return,
+				require,
 				"require_once",
-				"include",
+				include,
 				"include_once",
-				"function",
-				"abstract",
-				"final",
-				"class",
-				"public",
-				"private",
-				"protected",
-				"implements",
-				"extends",
-				"try",
-				"catch",
-				"instanceof",
-				"throw",
-				"exception",
-				"parent",
-				"true",
-				"false",
-				"TRUE",
-				"FALSE",
-				"YES",
-				"NO",
-				"die",
-				"exit",
-				"new",
-	            "<?php",
-	            "<?PHP",
-	            "<?",
-	            "?>",
-             );
-            Type = "xcode.syntax.keyword";
-            AltType = "xcode.syntax.identifier";    // non-keywords are identifiers
-        };
-    },
-
-    {
-        Identifier = "xcode.lang.phpe.interestingOperators";
-        Syntax = {
-            Words = (
-                "->",
-                "::",
-             );
-            Type = "xcode.syntax.plain";
-        };
-    },
-
-
-/****************************************************************************/
-// MARK: PHP Top Level
-/****************************************************************************/
-
-    {
-        Identifier = "xcode.lang.phpe";
-        Description = "PHP Coloring";
-        BasedOn = "xcode.lang.simpleColoring";
-        IncludeInMenu = YES;
-        Name = "PHP (Enormego)";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            IncludeRules = (        // processed in order
-                "xcode.lang.phpe.class",
-                "xcode.lang.phpe.interface",
-	            "xcode.lang.phpe.function.declaration",
-	            "xcode.lang.phpe.function.knr",
-	            "xcode.lang.phpe.function",
-            );
-            Type = "xcode.syntax.plain";
-        };
-    },
-
-/****************************************************************************/
-// MARK: Lexers
-/****************************************************************************/
-
-    // The following rule returns tokens to the other rules
-    {
-        Identifier = "xcode.lang.phpe.lexer";
-        Syntax = {
-            IncludeRules = (
-                "xcode.lang.phpe.comment.degenerate",
-                "xcode.lang.phpe.comment.phpdoc",
-                "xcode.lang.comment",
-                "xcode.lang.comment.singleline",
-				"xcode.lang.phpe.instance_method",
-				"xcode.lang.phpe.instance_variable",
-				"xcode.lang.phpe.static_method",
-				"xcode.lang.phpe.static_variable",
-				"xcode.lang.phpe.special_variable",
-				"xcode.lang.phpe.special_ivariable",
-				"xcode.lang.phpe.local_variable",
-				"xcode.lang.phpe.new.class",
-                "xcode.lang.string",
-                "xcode.lang.character",
-                "xcode.lang.completionplaceholder",
-                "xcode.lang.phpe.systemfunctions",
-                "xcode.lang.phpe.systemconstants",
-                "xcode.lang.phpe.interestingOperators",
-                "xcode.lang.phpe.identifier",
-                "xcode.lang.number",
-            );
-        };
-    },
-    
-/****************************************************************************/
-// MARK: Classes/Interfaces
-/****************************************************************************/
-
-    {
-        Identifier = "xcode.lang.phpe.class";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "xcode.lang.phpe.class.declarator",
-                "xcode.lang.phpe.class.block",
-            );
-            Type = "xcode.syntax.definition.java.class";
-        };
-    },
-    {
-        Identifier = "xcode.lang.phpe.innerclass";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "xcode.lang.phpe.method.declarator",
-                "xcode.lang.phpe.class.block",
-            );
-            Type = "xcode.syntax.definition.java.class";
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.class.declarator";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "class",
-                "xcode.lang.phpe.class.name",
-                "xcode.lang.phpe.class.declarator.extends?",
-                "xcode.lang.phpe.class.declarator.implements?",
-            );
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.class.name";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "xcode.lang.phpe.identifier",
-                "xcode.lang.phpe.templateclause?",
-            );
-            Type = "xcode.syntax.name.partial";
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.class.declarator.extends";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "extends",
-                "xcode.lang.phpe.qualifiedname",
-            );
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.class.declarator.implements";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "implements",
-                "xcode.lang.phpe.qualifiedname",
-                "xcode.lang.phpe.classnames.list*",
-            );
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.interface";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Foldable = YES;
-            Recursive = YES;
-            Rules = (
-                "xcode.lang.phpe.interface.declarator",
-                "xcode.lang.phpe.interface.block",
-            );
-            Type = "xcode.syntax.declaration.java.interface";
-        };
-    },
-    {
-        Identifier = "xcode.lang.phpe.interface.declarator";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "interface",
-                "xcode.lang.phpe.class.name",
-                "xcode.lang.phpe.interface.declarator.extends?",
-            );
-        };
-    },
-    {
-        Identifier = "xcode.lang.phpe.interface.declarator.extends";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "extends",
-                "xcode.lang.phpe.qualifiedname",
-                "xcode.lang.phpe.classnames.list*",
-            );
-        };
-    },
-
-    {
-        Identifier = "xcode.lang.phpe.classnames.list";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                ",",
-                "xcode.lang.phpe.qualifiedname",
-            );
-        };
-    },
-
-    {
-        Identifier = "xcode.lang.phpe.qualifiedname";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "xcode.lang.phpe.identifier",
-                "xcode.lang.phpe.qualifiedname.more*",
-                "xcode.lang.phpe.templateclause?",
-            );
-        };
-    },
-    {
-        Identifier = "xcode.lang.phpe.templateclause";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Start = "<";
-            End = ">";
-            Recursive = YES;
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.package.qualifiedname";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "xcode.lang.phpe.identifier",
-                "xcode.lang.phpe.import.qualifiedname.more*",
-            );
-            Type = "xcode.syntax.java.package";
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.import.qualifiedname";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "xcode.lang.phpe.identifier",
-                "xcode.lang.phpe.import.qualifiedname.more*",
-                "*?",
-            );
-            Type = "xcode.syntax.java.import";
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.import.qualifiedname.more";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                ".",
-                "xcode.lang.phpe.identifier?",
-            );
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.qualifiedname.more";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                ".",
-                "xcode.lang.phpe.identifier",
-            );
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.package";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "package",
-                "xcode.lang.phpe.package.qualifiedname",
-                ";",
-            );
-        };
-    },
-
-    {
-        Identifier = "xcode.lang.phpe.import";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "import",
-                "xcode.lang.phpe.import.qualifiedname",
-                ";",
-            );
-        };
-    },
-
-/****************************************************************************/
-// MARK: Methods
-/****************************************************************************/
-
-    {
-        Identifier = "xcode.lang.phpe.method.declaration";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "xcode.lang.phpe.method.declarator",
-                "xcode.lang.phpe.method.declarator.throws?",
-                ";",
-            );
-            Type = "xcode.syntax.declaration.method";
-        };
-    },
-
-    {
-        Identifier = "xcode.lang.phpe.method.definition";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "xcode.lang.phpe.method.declarator",
-                "xcode.lang.phpe.method.declarator.throws?",
-                "xcode.lang.phpe.block",
-            );
-            Type = "xcode.syntax.definition.method";
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.method.declarator";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "xcode.lang.phpe.identifier",
-                "xcode.lang.phpe.parenexpr",
-            );
-            Type = "xcode.syntax.name.partial";
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.method.declarator.throws";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Rules = (
-                "throws",
-                "xcode.lang.phpe.qualifiedname",
-                "xcode.lang.phpe.classnames.list*",
-            );
-        };
-    },
-    
-/****************************************************************************/
-// MARK: Blocks
-/****************************************************************************/
-
-    {
-        Identifier = "xcode.lang.phpe.class.block";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Start = "{";
-            End = "}";
-            Foldable = YES;
-            Recursive = YES;
-            IncludeRules = (
-                "xcode.lang.phpe.class",
-                "xcode.lang.phpe.interface",
-                "xcode.lang.phpe.method.definition",
-                "xcode.lang.phpe.method.declaration",
-                "xcode.lang.phpe.bracketexpr",
-                "xcode.lang.phpe.parenexpr",
-                "xcode.lang.phpe.initializer",
-            );
-        };
-    },
-    {
-        Identifier = "xcode.lang.phpe.interface.block";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Start = "{";
-            End = "}";
-            Foldable = YES;
-            Recursive = YES;
-            IncludeRules = (
-                "xcode.lang.phpe.interface",
-                "xcode.lang.phpe.method.definition",
-                "xcode.lang.phpe.method.declaration",
-                "xcode.lang.phpe.bracketexpr",
-                "xcode.lang.phpe.parenexpr",
-                "xcode.lang.phpe.initializer",
-            );
-        };
-    },
-    {
-        Identifier = "xcode.lang.phpe.block";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Start = "{";
-            End = "}";
-            Foldable = YES;
-            Recursive = YES;
-            IncludeRules = (
-                "xcode.lang.phpe.class",
-                "xcode.lang.phpe.interface",
-                "xcode.lang.phpe.bracketexpr",
-                "xcode.lang.phpe.parenexpr",
-            );
-        };
-    },
-    {
-        Identifier = "xcode.lang.phpe.parenexpr";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Start = "(";
-            End = ")";
-            Recursive = YES;
-            IncludeRules = (
-                "xcode.lang.phpe.bracketexpr",
-                "xcode.lang.phpe.block",
-                "xcode.lang.phpe.innerclass",
-            );
-        };
-    },
-    {
-        Identifier = "xcode.lang.phpe.bracketexpr";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Start = "[";
-            End = "]";
-            Recursive = YES;
-            IncludeRules = (
-                "xcode.lang.phpe.parenexpr",
-            );
-        };
-    },
-    
-    {
-        Identifier = "xcode.lang.phpe.initializer";
-        Syntax = {
-            Tokenizer = "xcode.lang.phpe.lexer";
-            Start = "=";
-            End = ";";
-            Recursive = NO;
-            IncludeRules = (
-                "xcode.lang.phpe.parenexpr",
-                "xcode.lang.phpe.bracketexpr",
-            );
-        };
-    },
-
-/****************************************************************************/
-// MARK: Method/Function/Class/Variables Calls
-/****************************************************************************/
-	{
-	    Identifier = "xcode.lang.phpe.new.class";
-	    Syntax = {
-	    	StartChars = "n";
-	        Match = (
-	            "new \([a-zA-Z0-9_]+\)",
+				try,
+				catch,
+				instanceof,
+				throw,
+				exception,
+				die,
+				exit,
 			);
-		
-			CaptureTypes = (
-	            "xcode.syntax.identifier.class"
-	        );
-        
-	        Type = "xcode.syntax.keyword";
-	    };
+			Type = "xcode.syntax.identifier.constant.system";
+		};
 	},
-
 	{
-	    Identifier = "xcode.lang.phpe.special_variable";
-	    Syntax = {
-	    	StartChars = "sp";
-	        Match = (
-	            "\(self|parent\)([^a-zA-Z0-9]|$)",
+		Identifier = "xcode.lang.php.interestingOperators";
+		Syntax = {
+			Words = (
+
 			);
-	
+			Type = "xcode.syntax.plain";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php";
+		Description = "PHP Coloring";
+		BasedOn = "xcode.lang.simpleColoring";
+		IncludeInMenu = YES;
+		Name = "PHP (Enormego)";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			IncludeRules = (
+				"xcode.lang.php.class",
+				"xcode.lang.php.interface",
+				"xcode.lang.php.function.declaration",
+				"xcode.lang.php.function.knr",
+				"xcode.lang.php.function",
+			);
+			Type = "xcode.syntax.plain";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.lexer";
+		Syntax = {
+			IncludeRules = (
+				"xcode.lang.php.systemfunctions",
+				"xcode.lang.php.systemconstants",
+				"xcode.lang.php.instance_method",
+				"xcode.lang.php.instance_variable",
+				"xcode.lang.php.static_method",
+				"xcode.lang.php.static_variable",
+				"xcode.lang.php.special_variable",
+				"xcode.lang.php.local_variable",
+				"xcode.lang.php.new.class",
+				"xcode.lang.string",
+				"xcode.lang.php.character",
+				"xcode.lang.completionplaceholder",
+				"xcode.lang.php.interestingOperators",
+				// "xcode.lang.php.catchBlock",
+				"xcode.lang.php.conditionalBlock",
+				"xcode.lang.php.systemIdentifier",
+				"xcode.lang.php.identifier",
+				"xcode.lang.number",
+				"xcode.lang.comment",
+				"xcode.lang.comment.singleline",
+				"xcode.lang.php.comment.degenerate",
+				"xcode.lang.php.comment.phpdoc",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.character";
+		Syntax = {
+			Start = "'";
+			EscapeChar = "\\";
+			End = "'";
+			Type = "xcode.syntax.string";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.class";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.class.declarator",
+				"xcode.lang.php.class.block",
+			);
+			Type = "xcode.syntax.definition.java.class";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.innerclass";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.method.declarator",
+				"xcode.lang.php.class.block",
+			);
+			Type = "xcode.syntax.definition.java.class";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.class.declarator";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				class,
+				"xcode.lang.php.class.name",
+				"xcode.lang.php.class.declarator.extends?",
+				"xcode.lang.php.class.declarator.implements?",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.class.name";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.identifier",
+				"xcode.lang.php.templateclause?",
+			);
+			Type = "xcode.syntax.name.partial";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.class.declarator.extends";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				extends,
+				"xcode.lang.php.qualifiedname",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.class.declarator.implements";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				implements,
+				"xcode.lang.php.qualifiedname",
+				"xcode.lang.php.classnames.list*",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.interface";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Foldable = YES;
+			Recursive = YES;
+			Rules = (
+				"xcode.lang.php.interface.declarator",
+				"xcode.lang.php.interface.block",
+			);
+			Type = "xcode.syntax.declaration.java.interface";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.interface.declarator";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				interface,
+				"xcode.lang.php.class.name",
+				"xcode.lang.php.interface.declarator.extends?",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.interface.declarator.extends";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				extends,
+				"xcode.lang.php.qualifiedname",
+				"xcode.lang.php.classnames.list*",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.classnames.list";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				",",
+				"xcode.lang.php.qualifiedname",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.qualifiedname";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.identifier",
+				"xcode.lang.php.qualifiedname.more*",
+				"xcode.lang.php.templateclause?",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.templateclause";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Start = "<";
+			End = ">";
+			Recursive = YES;
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.package.qualifiedname";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.identifier",
+				"xcode.lang.php.import.qualifiedname.more*",
+			);
+			Type = "xcode.syntax.java.package";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.import.qualifiedname";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.identifier",
+				"xcode.lang.php.import.qualifiedname.more*",
+				"*?",
+			);
+			Type = "xcode.syntax.java.import";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.import.qualifiedname.more";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				".",
+				"xcode.lang.php.identifier?",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.qualifiedname.more";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				".",
+				"xcode.lang.php.identifier",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.package";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				package,
+				"xcode.lang.php.package.qualifiedname",
+				";",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.import";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				import,
+				"xcode.lang.php.import.qualifiedname",
+				";",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.method.declaration";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.method.declarator",
+				"xcode.lang.php.method.declarator.throws?",
+				";",
+			);
+			Type = "xcode.syntax.declaration.method";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.method.definition";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.method.declarator",
+				"xcode.lang.php.method.declarator.throws?",
+				"xcode.lang.php.block",
+			);
+			Type = "xcode.syntax.definition.method";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.method.declarator";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.identifier",
+				"xcode.lang.php.parenexpr",
+			);
+			Type = "xcode.syntax.name.partial";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.method.declarator.throws";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				throws,
+				"xcode.lang.php.qualifiedname",
+				"xcode.lang.php.classnames.list*",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.class.block";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Start = "{";
+			End = "}";
+			Foldable = YES;
+			Recursive = YES;
+			IncludeRules = (
+				"xcode.lang.php.class",
+				"xcode.lang.php.interface",
+				"xcode.lang.php.method.definition",
+				"xcode.lang.php.method.declaration",
+				"xcode.lang.php.bracketexpr",
+				"xcode.lang.php.parenexpr",
+				"xcode.lang.php.initializer",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.interface.block";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Start = "{";
+			End = "}";
+			Foldable = YES;
+			Recursive = YES;
+			IncludeRules = (
+				"xcode.lang.php.interface",
+				"xcode.lang.php.method.definition",
+				"xcode.lang.php.method.declaration",
+				"xcode.lang.php.bracketexpr",
+				"xcode.lang.php.parenexpr",
+				"xcode.lang.php.initializer",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.block";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Start = "{";
+			End = "}";
+			Foldable = YES;
+			Recursive = YES;
+			IncludeRules = (
+				"xcode.lang.php.class",
+				"xcode.lang.php.interface",
+				"xcode.lang.php.bracketexpr",
+				"xcode.lang.php.parenexpr",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.parenexpr";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Start = "(";
+			End = ")";
+			Recursive = YES;
+			IncludeRules = (
+				"xcode.lang.php.bracketexpr",
+				"xcode.lang.php.block",
+				"xcode.lang.php.innerclass",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.bracketexpr";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Start = "[";
+			End = "]";
+			Recursive = YES;
+			IncludeRules = (
+				"xcode.lang.php.parenexpr",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.initializer";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Start = "=";
+			End = ";";
+			Recursive = NO;
+			IncludeRules = (
+				"xcode.lang.php.parenexpr",
+				"xcode.lang.php.bracketexpr",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.conditionalBlock";
+		Syntax = {
+			StartChars = ieswfctdb;
+			Match = (
+				"((else(\\s+)?)?if|switch|while|for(each)?|catch)(\\s+)?\\(",
+				"(case|throw)\\s",
+				"(else|default)(\\s+)?:",
+				"(else|try|do)(\\s|:|\\{|\\?)",
+				"(end(if|for(each)?|while|switch)|continue|break)($|\\s|;|\\?)",
+			);
 			CaptureTypes = (
-	            "xcode.syntax.keyword",
-	        );
-	    };
+				"xcode.syntax.identifier.constant.system",
+			);
+		};
 	},
-
 	{
-	    Identifier = "xcode.lang.phpe.special_ivariable";
-	    Syntax = {
-	    	StartChars = "$";
-			Words = ("$this");
-	        Type = "xcode.syntax.identifier.variable";
-	    };
+		Identifier = "xcode.lang.php.catchBlock";
+		Syntax = {
+
+		};
 	},
-
 	{
-	    Identifier = "xcode.lang.phpe.instance_variable";
-	    Syntax = {
-	    	StartChars = "-";
+		Identifier = "xcode.lang.php.new.class";
+		Syntax = {
+			StartChars = n;
+			Match = (
+				"(new)\\s+?([a-zA-Z0-9_]+)",
+			);
+			CaptureTypes = (
+				"xcode.syntax.identifier.constant.system",
+				"xcode.syntax.identifier.class",
+			);
+			Type = "xcode.syntax.keyword";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.special_variable";
+		Syntax = {
+			StartChars = sp;
+			Match = (
+				"(self|parent)([^a-zA-Z0-9]|$)",
+			);
+			CaptureTypes = (
+				"xcode.syntax.keyword",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.instance_variable";
+		Syntax = {
+			StartChars = "-";
 			Chars = "->abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789";
-	        Match = (
-	            "->\([a-zA-Z0-9_]+\)($|->)",
+			Match = (
+				"(->)([a-zA-Z0-9_]+)",
 			);
-	
 			CaptureTypes = (
-	            "xcode.syntax.identifier.variable",
-	        );
-	    };
+				"xcode.syntax.identifier.constant.system",
+				"xcode.syntax.attribute",
+			);
+		};
 	},
-
 	{
-	    Identifier = "xcode.lang.phpe.instance_method";
-	    Syntax = {
-	    	StartChars = "-";
+		Identifier = "xcode.lang.php.instance_method";
+		Syntax = {
+			StartChars = "-";
 			Chars = "->abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789( ";
-	        Match = (
-	            "->\([a-zA-Z0-9_ ]+\)\\(",
+			Match = (
+				"(->)([a-zA-Z0-9_]+)(->)([a-zA-Z0-9_ ]+)\\(",
+				"()([a-zA-Z0-9_]+)(->)([a-zA-Z0-9_ ]+)\\(",
+				"()(->)([a-zA-Z0-9_ ]+)\\(",
 			);
-
 			CaptureTypes = (
-	            "xcode.syntax.identifier.function",
-	        );
-	    };
+				"xcode.syntax.identifier.constant.system",
+				"xcode.syntax.attribute",
+				"xcode.syntax.identifier.constant.system",
+				"xcode.syntax.plain",
+			);
+		};
 	},
-
 	{
-	    Identifier = "xcode.lang.phpe.static_variable";
-	    Syntax = {
-	    	StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ:";
+		Identifier = "xcode.lang.php.static_variable";
+		Syntax = {
+			StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ:";
 			Chars = ":abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789$";
-	        Match = (
-	            "\(self|parent\)\(\)::\(\\$[a-zA-Z0-9_]+\)",
-	            "\(\)\([a-zA-Z0-9_]+\)::\(\\$[a-zA-Z0-9_]+\)",
-	            "\(\)\(\)::\(\\$[a-zA-Z0-9_]+\)",
+			Match = (
+				"(self|parent)()(::)(\\$[a-zA-Z0-9_]+)",
+				"()([a-zA-Z0-9_]+)(::)(\\$[a-zA-Z0-9_]+)",
+				"()()(::)(\\$[a-zA-Z0-9_]+)",
 			);
-
 			CaptureTypes = (
-	            "xcode.syntax.keyword",
-	            "xcode.syntax.identifier.class",
-	            "xcode.syntax.identifier.variable",
-	        );
-	    };
-
+				"xcode.syntax.keyword",
+				"xcode.syntax.identifier.class",
+				"xcode.syntax.identifier.constant.system",
+				"xcode.syntax.attribute",
+			);
+		};
 	},
-	
 	{
-	    Identifier = "xcode.lang.phpe.static_method";
-	    Syntax = {
-	    	StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ:";
+		Identifier = "xcode.lang.php.static_method";
+		Syntax = {
+			StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ:";
 			Chars = ":abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789( ";
-	        Match = (
-	            "\(self|parent\)\(\)::\([a-zA-Z0-9_ ]+\)\\(",
-	            "\(\)\([a-zA-Z0-9_]+\)::\([a-zA-Z0-9_ ]+\)\\(",
-	            "\(\)\(\)::\([a-zA-Z0-9_ ]+\)\\(",
+			Match = (
+				"(self|parent)()(::)([a-zA-Z0-9_ ]+)\\(",
+				"()([a-zA-Z0-9_]+)(::)([a-zA-Z0-9_ ]+)\\(",
+				"()()(::)([a-zA-Z0-9_ ]+)\\(",
 			);
-
 			CaptureTypes = (
-	            "xcode.syntax.keyword",
-	            "xcode.syntax.identifier.class",
-	            "xcode.syntax.identifier.function",
-	        );
-	    };
+				"xcode.syntax.keyword",
+				"xcode.syntax.identifier.class",
+				"xcode.syntax.identifier.constant.system",
+				"xcode.syntax.plain",
+			);
+		};
 	},
-
 	{
-	    Identifier = "xcode.lang.phpe.local_variable";
-	    Syntax = {
-	    	StartChars = "$";
+		Identifier = "xcode.lang.php.local_variable";
+		Syntax = {
+			StartChars = "$";
 			Chars = "$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789";
-	        Type = "xcode.syntax.plain";
-	    };
+			Type = "xcode.syntax.attribute";
+		};
 	},
-
-/****************************************************************************/
-// MARK: Functions
-/****************************************************************************/
-
-	    {
-	        Identifier = "xcode.lang.phpe.function.declaration";
-	        Syntax = {
-	            Tokenizer = "xcode.lang.phpe.lexer";
-	            Rules = (
-	                "xcode.lang.phpe.function.declarator",
-	                "xcode.lang.phpe.identifier?",
-	                ";"
-	            );
-	            Type = "xcode.syntax.declaration.c.function";
-	        };
-	    },
-	    {
-	        Identifier = "xcode.lang.phpe.function";
-	        Syntax = {
-	            Tokenizer = "xcode.lang.phpe.lexer";
-	            Rules = (
-	                "xcode.lang.phpe.function.declarator",
-	                "xcode.lang.phpe.block",
-	            );
-	            Type = "xcode.syntax.definition.c.function";
-	        };
-	    },
-	    {
-	        Identifier = "xcode.lang.phpe.function.knr";
-	        Syntax = {
-	            Tokenizer = "xcode.lang.phpe.lexer";
-	            Rules = (
-	                "xcode.lang.phpe.function.declarator",
-	                "xcode.lang.phpe.identifier|auto|char|const|double|enum|float|int|long|register|short|signed|struct|union|unsigned|void",
-	                "xcode.lang.phpe.knrargs+",
-	                "xcode.lang.phpe.block",
-	            );
-	            Type = "xcode.syntax.definition.c.function";
-	        };
-	    },
-	    {
-	        Identifier = "xcode.lang.phpe.knrargs";
-	        Syntax = {
-	            Tokenizer = "xcode.lang.phpe.lexer";
-	            Rules = (
-	                "xcode.lang.phpe.identifier|auto|char|const|double|enum|float|int|long|register|short|signed|struct|union|unsigned|void|*|,*",
-	                "xcode.lang.phpe.parenexpr*",
-	                "xcode.lang.phpe.bracketexpr*",
-	                ";",
-	            );
-	        };
-	    },
-	    {
-	        Identifier = "xcode.lang.phpe.function.declarator";
-	        Syntax = {
-	            Tokenizer = "xcode.lang.phpe.lexer";
-	            Rules = (
-	                "xcode.lang.phpe.function.name",
-	                "xcode.lang.phpe.parenexpr",
-	            );
-	        };
-	    },
-	    {
-	        Identifier = "xcode.lang.phpe.function.name";
-	        Syntax = {
-	            Tokenizer = "xcode.lang.phpe.lexer";
-	            Rules = (
-	                "xcode.lang.phpe.identifier",
-	            );
-	            Type = "xcode.syntax.name.partial";
-	        };
-	    },
-	
-/****************************************************************************/
-// MARK: PHP System Functions
-/****************************************************************************/
-
-    {
-        Identifier = "xcode.lang.phpe.systemfunctions";
-        Syntax = {
-            StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-            Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
-            Words = (
-				"abs",
-				"acos",
-				"acosh",
-				"addcslashes",
-				"addslashes",
+	{
+		Identifier = "xcode.lang.php.function.declaration";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.function.declarator",
+				"xcode.lang.php.identifier?",
+				";",
+			);
+			Type = "xcode.syntax.declaration.c.function";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.function";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.function.declarator",
+				"xcode.lang.php.block",
+			);
+			Type = "xcode.syntax.definition.c.function";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.function.knr";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.function.declarator",
+				"xcode.lang.php.identifier|auto|char|const|double|enum|float|int|long|register|short|signed|struct|union|unsigned|void",
+				"xcode.lang.php.knrargs+",
+				"xcode.lang.php.block",
+			);
+			Type = "xcode.syntax.definition.c.function";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.knrargs";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.identifier|auto|char|const|double|enum|float|int|long|register|short|signed|struct|union|unsigned|void|*|,*",
+				"xcode.lang.php.parenexpr*",
+				"xcode.lang.php.bracketexpr*",
+				";",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.function.declarator";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.function.name",
+				"xcode.lang.php.parenexpr",
+			);
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.function.name";
+		Syntax = {
+			Tokenizer = "xcode.lang.php.lexer";
+			Rules = (
+				"xcode.lang.php.identifier",
+			);
+			Type = "xcode.syntax.name.partial";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.systemfunctions";
+		Syntax = {
+			StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+			Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+			Words = (
+				abs,
+				acos,
+				acosh,
+				addcslashes,
+				addslashes,
 				"aggregate_info",
 				"aggregate_methods_by_list",
 				"aggregate_methods_by_regexp",
@@ -789,7 +737,7 @@
 				"aggregate_properties_by_list",
 				"aggregate_properties_by_regexp",
 				"aggregate_properties",
-				"aggregate",
+				aggregate,
 				"apache_child_terminate",
 				"apache_get_modules",
 				"apache_get_version",
@@ -873,20 +821,20 @@
 				"array_values",
 				"array_walk_recursive",
 				"array_walk",
-				"array",
-				"arsort",
-				"asin",
-				"asinh",
-				"asort",
+				array,
+				arsort,
+				asin,
+				asinh,
+				asort,
 				"assert_options",
-				"assert",
-				"atan",
-				"atan2",
-				"atanh",
+				assert,
+				atan,
+				atan2,
+				atanh,
 				"base_convert",
 				"base64_decode",
 				"base64_encode",
-				"basename",
+				basename,
 				"bbcode_add_element",
 				"bbcode_add_smiley",
 				"bbcode_create",
@@ -894,11 +842,11 @@
 				"bbcode_parse",
 				"bbcode_set_arg_parser",
 				"bbcode_set_flags",
-				"bcadd",
-				"bccomp",
-				"bcdiv",
-				"bcmod",
-				"bcmul",
+				bcadd,
+				bccomp,
+				bcdiv,
+				bcmod,
+				bcmul,
 				"bcompiler_load_exe",
 				"bcompiler_load",
 				"bcompiler_parse_class",
@@ -912,27 +860,27 @@
 				"bcompiler_write_functions_from_file",
 				"bcompiler_write_header",
 				"bcompiler_write_included_filename",
-				"bcpow",
-				"bcpowmod",
-				"bcscale",
-				"bcsqrt",
-				"bcsub",
-				"bin2hex",
+				bcpow,
+				bcpowmod,
+				bcscale,
+				bcsqrt,
+				bcsub,
+				bin2hex,
 				"bind_textdomain_codeset",
-				"bindec",
-				"bindtextdomain",
+				bindec,
+				bindtextdomain,
 				"bson_decode",
 				"bson_encode",
-				"bzclose",
-				"bzcompress",
-				"bzdecompress",
-				"bzerrno",
-				"bzerror",
-				"bzerrstr",
-				"bzflush",
-				"bzopen",
-				"bzread",
-				"bzwrite",
+				bzclose,
+				bzcompress,
+				bzdecompress,
+				bzerrno,
+				bzerror,
+				bzerrstr,
+				bzflush,
+				bzopen,
+				bzread,
+				bzwrite,
 				"cairo_create",
 				"cairo_font_face_get_type",
 				"cairo_font_options_create",
@@ -1030,20 +978,20 @@
 				"cal_info",
 				"cal_to_jd",
 				"calcul_hmac",
-				"calculhmac",
+				calculhmac,
 				"call_user_func_array",
 				"call_user_func",
 				"call_user_method_array",
 				"call_user_method",
-				"ceil",
-				"chdir",
-				"checkdate",
-				"checkdnsrr",
-				"chgrp",
-				"chmod",
-				"chown",
-				"chr",
-				"chroot",
+				ceil,
+				chdir,
+				checkdate,
+				checkdnsrr,
+				chgrp,
+				chmod,
+				chown,
+				chr,
+				chroot,
 				"chunk_split",
 				"class_alias",
 				"class_exists",
@@ -1055,9 +1003,9 @@
 				"classkit_method_redefine",
 				"classkit_method_remove",
 				"classkit_method_rename",
-				"clearstatcache",
-				"closedir",
-				"closelog",
+				clearstatcache,
+				closedir,
+				closelog,
 				"com_addref",
 				"com_create_guid",
 				"com_event_sink",
@@ -1068,26 +1016,26 @@
 				"com_message_pump",
 				"com_print_typeinfo",
 				"com_release",
-				"compact",
+				compact,
 				"connection_aborted",
 				"connection_status",
 				"connection_timeout",
-				"constant",
+				constant,
 				"convert_cyr_string",
 				"convert_uudecode",
 				"convert_uuencode",
-				"copy",
-				"cos",
-				"cosh",
+				copy,
+				cos,
+				cosh,
 				"count_chars",
-				"count",
+				count,
 				"crack_check",
 				"crack_closedict",
 				"crack_getlastmessage",
 				"crack_opendict",
-				"crc32",
+				crc32,
 				"create_function",
-				"crypt",
+				crypt,
 				"ctype_alnum",
 				"ctype_alpha",
 				"ctype_cntrl",
@@ -1117,7 +1065,7 @@
 				"curl_setopt_array",
 				"curl_setopt",
 				"curl_version",
-				"current",
+				current,
 				"cyrus_authenticate",
 				"cyrus_bind",
 				"cyrus_close",
@@ -1132,7 +1080,7 @@
 				"date_sun_info",
 				"date_sunrise",
 				"date_sunset",
-				"date",
+				date,
 				"db2_autocommit",
 				"db2_bind_param",
 				"db2_client_info",
@@ -1266,21 +1214,21 @@
 				"dbx_fetch_row",
 				"dbx_query",
 				"dbx_sort",
-				"dcgettext",
-				"dcngettext",
-				"deaggregate",
+				dcgettext,
+				dcngettext,
+				deaggregate,
 				"debug_backtrace",
 				"debug_print_backtrace",
 				"debug_zval_dump",
-				"decbin",
-				"dechex",
-				"decoct",
+				decbin,
+				dechex,
+				decoct,
 				"define_syslog_variables",
-				"define",
-				"defined",
-				"deg2rad",
-				"delete",
-				"dgettext",
+				define,
+				defined,
+				deg2rad,
+				delete,
+				dgettext,
 				"dio_close",
 				"dio_fcntl",
 				"dio_open",
@@ -1290,17 +1238,17 @@
 				"dio_tcsetattr",
 				"dio_truncate",
 				"dio_write",
-				"dirname",
+				dirname,
 				"disk_free_space",
 				"disk_total_space",
-				"dl",
-				"dngettext",
+				dl,
+				dngettext,
 				"dns_get_record",
 				"dom_import_simplexml",
-				"name",
+				name,
 				"set_value",
-				"specified",
-				"value",
+				specified,
+				value,
 				"DomDocument->add_root",
 				"DomDocument->create_attribute",
 				"DomDocument->create_cdata_section",
@@ -1318,10 +1266,10 @@
 				"DomDocument->get_elements_by_tagname",
 				"DomDocument->html_dump_mem",
 				"DomDocument->xinclude",
-				"entities",
+				entities,
 				"internal_subset",
-				"name",
-				"notations",
+				name,
+				notations,
 				"public_id",
 				"system_id",
 				"get_attribute_node",
@@ -1331,7 +1279,7 @@
 				"remove_attribute",
 				"set_attribute_node",
 				"set_attribute",
-				"tagname",
+				tagname,
 				"add_namespace",
 				"append_child",
 				"DomNode->append_sibling",
@@ -1361,8 +1309,8 @@
 				"DomNode->set_name",
 				"DomNode->set_namespace",
 				"DomNode->unlink_node",
-				"data",
-				"target",
+				data,
+				target,
 				"domxml_new_doc",
 				"domxml_open_file",
 				"domxml_open_mem",
@@ -1372,15 +1320,15 @@
 				"domxml_xslt_stylesheet_file",
 				"domxml_xslt_stylesheet",
 				"domxml_xslt_version",
-				"process",
+				process,
 				"result_dump_file",
 				"result_dump_mem",
 				"dotnet_load",
-				"each",
+				each,
 				"easter_date",
 				"easter_days",
-				"echo",
-				"empty",
+				echo,
+				empty,
 				"enchant_broker_describe",
 				"enchant_broker_dict_exists",
 				"enchant_broker_free_dict",
@@ -1400,17 +1348,17 @@
 				"enchant_dict_quick_check",
 				"enchant_dict_store_replacement",
 				"enchant_dict_suggest",
-				"end",
+				end,
 				"ereg_replace",
-				"ereg",
+				ereg,
 				"eregi_replace",
-				"eregi",
+				eregi,
 				"error_get_last",
 				"error_log",
 				"error_reporting",
-				"escapeshellarg",
-				"escapeshellcmd",
-				"eval",
+				escapeshellarg,
+				escapeshellcmd,
+				eval,
 				"event_base_free",
 				"event_base_loop",
 				"event_base_loopbreak",
@@ -1434,19 +1382,18 @@
 				"event_new",
 				"event_set",
 				"event_add",
-				"exec",
+				exec,
 				"exif_imagetype",
 				"exif_read_data",
 				"exif_tagname",
 				"exif_thumbnail",
-				"exit",
-				"exp",
+				exp,
 				"expect_expectl",
 				"expect_popen",
-				"explode",
-				"expm1",
+				explode,
+				expm1,
 				"extension_loaded",
-				"extract",
+				extract,
 				"ezmlm_hash",
 				"fam_cancel_monitor",
 				"fam_close",
@@ -1517,7 +1464,7 @@
 				"fbsql_table_name",
 				"fbsql_username",
 				"fbsql_warnings",
-				"fclose",
+				fclose,
 				"fdf_add_doc_javascript",
 				"fdf_add_template",
 				"fdf_close",
@@ -1553,32 +1500,32 @@
 				"fdf_set_target_frame",
 				"fdf_set_value",
 				"fdf_set_version",
-				"feof",
-				"fflush",
-				"fgetc",
-				"fgetcsv",
-				"fgets",
-				"fgetss",
+				feof,
+				fflush,
+				fgetc,
+				fgetcsv,
+				fgets,
+				fgetss,
 				"file_exists",
 				"file_get_contents",
 				"file_put_contents",
-				"file",
-				"fileatime",
-				"filectime",
-				"filegroup",
-				"fileinode",
-				"filemtime",
-				"fileowner",
-				"fileperms",
+				file,
+				fileatime,
+				filectime,
+				filegroup,
+				fileinode,
+				filemtime,
+				fileowner,
+				fileperms,
 				"filepro_fieldcount",
 				"filepro_fieldname",
 				"filepro_fieldtype",
 				"filepro_fieldwidth",
 				"filepro_retrieve",
 				"filepro_rowcount",
-				"filepro",
-				"filesize",
-				"filetype",
+				filepro,
+				filesize,
+				filetype,
 				"filter_has_var",
 				"filter_id",
 				"filter_input_array",
@@ -1591,27 +1538,27 @@
 				"finfo_file",
 				"finfo_open",
 				"finfo_set_flags",
-				"floatval",
-				"flock",
-				"floor",
-				"flush",
-				"fmod",
-				"fnmatch",
-				"fopen",
+				floatval,
+				flock,
+				floor,
+				flush,
+				fmod,
+				fnmatch,
+				fopen,
 				"forward_static_call_array",
 				"forward_static_call",
-				"fpassthru",
-				"fprintf",
-				"fputcsv",
-				"fread",
-				"frenchtojd",
+				fpassthru,
+				fprintf,
+				fputcsv,
+				fread,
+				frenchtojd,
 				"fribidi_log2vis",
-				"fscanf",
-				"fseek",
-				"fsockopen",
-				"fstat",
-				"ftell",
-				"ftok",
+				fscanf,
+				fseek,
+				fsockopen,
+				fstat,
+				ftell,
+				ftok,
 				"ftp_alloc",
 				"ftp_cdup",
 				"ftp_chdir",
@@ -1645,12 +1592,12 @@
 				"ftp_size",
 				"ftp_ssl_connect",
 				"ftp_systype",
-				"ftruncate",
+				ftruncate,
 				"func_get_arg",
 				"func_get_args",
 				"func_num_args",
 				"function_exists",
-				"fwrite",
+				fwrite,
 				"gc_collect_cycles",
 				"gc_disable",
 				"gc_enable",
@@ -1695,34 +1642,34 @@
 				"get_object_vars",
 				"get_parent_class",
 				"get_resource_type",
-				"getallheaders",
-				"getcwd",
-				"getdate",
-				"getenv",
-				"gethostbyaddr",
-				"gethostbyname",
-				"gethostbynamel",
-				"gethostname",
-				"getimagesize",
-				"getlastmod",
-				"getmxrr",
-				"getmygid",
-				"getmyinode",
-				"getmypid",
-				"getmyuid",
-				"getopt",
-				"getprotobyname",
-				"getprotobynumber",
-				"getrandmax",
-				"getrusage",
-				"getservbyname",
-				"getservbyport",
-				"gettext",
-				"gettimeofday",
-				"gettype",
-				"glob",
-				"gmdate",
-				"gmmktime",
+				getallheaders,
+				getcwd,
+				getdate,
+				getenv,
+				gethostbyaddr,
+				gethostbyname,
+				gethostbynamel,
+				gethostname,
+				getimagesize,
+				getlastmod,
+				getmxrr,
+				getmygid,
+				getmyinode,
+				getmypid,
+				getmyuid,
+				getopt,
+				getprotobyname,
+				getprotobynumber,
+				getrandmax,
+				getrusage,
+				getservbyname,
+				getservbyport,
+				gettext,
+				gettimeofday,
+				gettype,
+				glob,
+				gmdate,
+				gmmktime,
 				"gmp_abs",
 				"gmp_add",
 				"gmp_and",
@@ -1763,7 +1710,7 @@
 				"gmp_sub",
 				"gmp_testbit",
 				"gmp_xor",
-				"gmstrftime",
+				gmstrftime,
 				"gnupg_adddecryptkey",
 				"gnupg_addencryptkey",
 				"gnupg_addsignkey",
@@ -1795,7 +1742,7 @@
 				"grapheme_strrpos",
 				"grapheme_strstr",
 				"grapheme_substr",
-				"gregoriantojd",
+				gregoriantojd,
 				"gupnp_context_get_host_ip",
 				"gupnp_context_get_port",
 				"gupnp_context_get_subscription_timeout",
@@ -1834,25 +1781,25 @@
 				"gupnp_service_proxy_remove_notify",
 				"gupnp_service_proxy_set_subscribed",
 				"gupnp_service_thaw_notify",
-				"gzclose",
-				"gzcompress",
-				"gzdecode",
-				"gzdeflate",
-				"gzencode",
-				"gzeof",
-				"gzfile",
-				"gzgetc",
-				"gzgets",
-				"gzgetss",
-				"gzinflate",
-				"gzopen",
-				"gzpassthru",
-				"gzread",
-				"gzrewind",
-				"gzseek",
-				"gztell",
-				"gzuncompress",
-				"gzwrite",
+				gzclose,
+				gzcompress,
+				gzdecode,
+				gzdeflate,
+				gzencode,
+				gzeof,
+				gzfile,
+				gzgetc,
+				gzgets,
+				gzgetss,
+				gzinflate,
+				gzopen,
+				gzpassthru,
+				gzread,
+				gzrewind,
+				gzseek,
+				gztell,
+				gzuncompress,
+				gzwrite,
 				"__halt_compiler",
 				"HaruAnnotation::setBorderStyle",
 				"HaruAnnotation::setHighlightMode",
@@ -2028,20 +1975,20 @@
 				"hash_update_file",
 				"hash_update_stream",
 				"hash_update",
-				"hash",
+				hash,
 				"header_remove",
-				"header",
+				header,
 				"headers_list",
 				"headers_sent",
-				"hebrev",
-				"hebrevc",
-				"hexdec",
+				hebrev,
+				hebrevc,
+				hexdec,
 				"highlight_file",
 				"highlight_string",
 				"html_entity_decode",
-				"htmlentities",
+				htmlentities,
 				"htmlspecialchars_decode",
-				"htmlspecialchars",
+				htmlspecialchars,
 				"http_build_cookie",
 				"http_build_query",
 				"http_build_str",
@@ -2296,54 +2243,54 @@
 				"hw_stat",
 				"hw_unlock",
 				"hw_who",
-				"langdepvalue",
-				"value",
-				"values",
+				langdepvalue,
+				value,
+				values,
 				"hw_api_attribute",
-				"checkin",
-				"checkout",
-				"children",
-				"mimetype",
-				"read",
-				"content",
-				"dbstat",
-				"dcstat",
-				"dstanchors",
-				"dstofsrcanchor",
-				"reason",
-				"find",
-				"ftstat",
+				checkin,
+				checkout,
+				children,
+				mimetype,
+				read,
+				content,
+				dbstat,
+				dcstat,
+				dstanchors,
+				dstofsrcanchor,
+				reason,
+				find,
+				ftstat,
 				"hwapi_hgcsp",
-				"hwstat",
-				"identify",
-				"info",
-				"insert",
-				"insertanchor",
-				"insertcollection",
-				"insertdocument",
-				"lock",
-				"move",
+				hwstat,
+				identify,
+				info,
+				insert,
+				insertanchor,
+				insertcollection,
+				insertdocument,
+				lock,
+				move,
 				"hw_api_content",
-				"assign",
-				"attreditable",
-				"insert",
-				"remove",
-				"title",
-				"value",
-				"object",
-				"objectbyanchor",
-				"parents",
-				"description",
-				"type",
-				"remove",
-				"replace",
-				"setcommittedversion",
-				"srcanchors",
-				"srcsofdst",
-				"unlock",
-				"user",
-				"userlist",
-				"hypot",
+				assign,
+				attreditable,
+				insert,
+				remove,
+				title,
+				value,
+				object,
+				objectbyanchor,
+				parents,
+				description,
+				type,
+				remove,
+				replace,
+				setcommittedversion,
+				srcanchors,
+				srcsofdst,
+				unlock,
+				user,
+				userlist,
+				hypot,
 				"ibase_add_user",
 				"ibase_affected_rows",
 				"ibase_backup",
@@ -2402,7 +2349,7 @@
 				"iconv_strpos",
 				"iconv_strrpos",
 				"iconv_substr",
-				"iconv",
+				iconv,
 				"id3_get_frame_long_name",
 				"id3_get_frame_short_name",
 				"id3_get_genre_id",
@@ -2412,7 +2359,7 @@
 				"id3_get_version",
 				"id3_remove_tag",
 				"id3_set_tag",
-				"idate",
+				idate,
 				"idn_to_ascii",
 				"idn_to_utf8",
 				"ifx_affected_rows",
@@ -2472,100 +2419,100 @@
 				"iis_stop_service",
 				"image_type_to_extension",
 				"image_type_to_mime_type",
-				"image2wbmp",
-				"imagealphablending",
-				"imageantialias",
-				"imagearc",
-				"imagechar",
-				"imagecharup",
-				"imagecolorallocate",
+				image2wbmp,
+				imagealphablending,
+				imageantialias,
+				imagearc,
+				imagechar,
+				imagecharup,
+				imagecolorallocate,
 				"imagecolorallocatealpha",
-				"imagecolorat",
-				"imagecolorclosest",
+				imagecolorat,
+				imagecolorclosest,
 				"imagecolorclosestalpha",
-				"imagecolorclosesthwb",
-				"imagecolordeallocate",
-				"imagecolorexact",
-				"imagecolorexactalpha",
-				"imagecolormatch",
-				"imagecolorresolve",
+				imagecolorclosesthwb,
+				imagecolordeallocate,
+				imagecolorexact,
+				imagecolorexactalpha,
+				imagecolormatch,
+				imagecolorresolve,
 				"imagecolorresolvealpha",
-				"imagecolorset",
-				"imagecolorsforindex",
-				"imagecolorstotal",
+				imagecolorset,
+				imagecolorsforindex,
+				imagecolorstotal,
 				"imagecolortransparent",
-				"imageconvolution",
-				"imagecopy",
-				"imagecopymerge",
-				"imagecopymergegray",
-				"imagecopyresampled",
-				"imagecopyresized",
-				"imagecreate",
-				"imagecreatefromgd",
-				"imagecreatefromgd2",
+				imageconvolution,
+				imagecopy,
+				imagecopymerge,
+				imagecopymergegray,
+				imagecopyresampled,
+				imagecopyresized,
+				imagecreate,
+				imagecreatefromgd,
+				imagecreatefromgd2,
 				"imagecreatefromgd2part",
-				"imagecreatefromgif",
-				"imagecreatefromjpeg",
-				"imagecreatefrompng",
+				imagecreatefromgif,
+				imagecreatefromjpeg,
+				imagecreatefrompng,
 				"imagecreatefromstring",
-				"imagecreatefromwbmp",
-				"imagecreatefromxbm",
-				"imagecreatefromxpm",
-				"imagecreatetruecolor",
-				"imagedashedline",
-				"imagedestroy",
-				"imageellipse",
-				"imagefill",
-				"imagefilledarc",
-				"imagefilledellipse",
-				"imagefilledpolygon",
-				"imagefilledrectangle",
-				"imagefilltoborder",
-				"imagefilter",
-				"imagefontheight",
-				"imagefontwidth",
-				"imageftbbox",
-				"imagefttext",
-				"imagegammacorrect",
-				"imagegd",
-				"imagegd2",
-				"imagegif",
-				"imagegrabscreen",
-				"imagegrabwindow",
-				"imageinterlace",
-				"imageistruecolor",
-				"imagejpeg",
-				"imagelayereffect",
-				"imageline",
-				"imageloadfont",
-				"imagepalettecopy",
-				"imagepng",
-				"imagepolygon",
-				"imagepsbbox",
-				"imagepsencodefont",
-				"imagepsextendfont",
-				"imagepsfreefont",
-				"imagepsloadfont",
-				"imagepsslantfont",
-				"imagepstext",
-				"imagerectangle",
-				"imagerotate",
-				"imagesavealpha",
-				"imagesetbrush",
-				"imagesetpixel",
-				"imagesetstyle",
-				"imagesetthickness",
-				"imagesettile",
-				"imagestring",
-				"imagestringup",
-				"imagesx",
-				"imagesy",
+				imagecreatefromwbmp,
+				imagecreatefromxbm,
+				imagecreatefromxpm,
+				imagecreatetruecolor,
+				imagedashedline,
+				imagedestroy,
+				imageellipse,
+				imagefill,
+				imagefilledarc,
+				imagefilledellipse,
+				imagefilledpolygon,
+				imagefilledrectangle,
+				imagefilltoborder,
+				imagefilter,
+				imagefontheight,
+				imagefontwidth,
+				imageftbbox,
+				imagefttext,
+				imagegammacorrect,
+				imagegd,
+				imagegd2,
+				imagegif,
+				imagegrabscreen,
+				imagegrabwindow,
+				imageinterlace,
+				imageistruecolor,
+				imagejpeg,
+				imagelayereffect,
+				imageline,
+				imageloadfont,
+				imagepalettecopy,
+				imagepng,
+				imagepolygon,
+				imagepsbbox,
+				imagepsencodefont,
+				imagepsextendfont,
+				imagepsfreefont,
+				imagepsloadfont,
+				imagepsslantfont,
+				imagepstext,
+				imagerectangle,
+				imagerotate,
+				imagesavealpha,
+				imagesetbrush,
+				imagesetpixel,
+				imagesetstyle,
+				imagesetthickness,
+				imagesettile,
+				imagestring,
+				imagestringup,
+				imagesx,
+				imagesy,
 				"imagetruecolortopalette",
-				"imagettfbbox",
-				"imagettftext",
-				"imagetypes",
-				"imagewbmp",
-				"imagexbm",
+				imagettfbbox,
+				imagettftext,
+				imagetypes,
+				imagewbmp,
+				imagexbm,
 				"Imagick::adaptiveBlurImage",
 				"Imagick::adaptiveResizeImage",
 				"Imagick::adaptiveSharpenImage",
@@ -3079,7 +3026,7 @@
 				"imap_utf7_decode",
 				"imap_utf7_encode",
 				"imap_utf8",
-				"implode",
+				implode,
 				"import_request_variables",
 				"in_array",
 				"inclued_get_data",
@@ -3133,10 +3080,10 @@
 				"intl_get_error_code",
 				"intl_get_error_message",
 				"intl_is_failure",
-				"intval",
-				"ip2long",
-				"iptcembed",
-				"iptcparse",
+				intval,
+				ip2long,
+				iptcembed,
+				iptcparse,
 				"is_a",
 				"is_array",
 				"is_binary",
@@ -3164,25 +3111,25 @@
 				"is_unicode",
 				"is_uploaded_file",
 				"is_writable",
-				"isset",
+				isset,
 				"iterator_apply",
 				"iterator_count",
 				"iterator_to_array",
 				"java_last_exception_clear",
 				"java_last_exception_get",
-				"jddayofweek",
-				"jdmonthname",
-				"jdtofrench",
-				"jdtogregorian",
-				"jdtojewish",
-				"jdtojulian",
-				"jdtounix",
-				"jewishtojd",
-				"jpeg2wbmp",
+				jddayofweek,
+				jdmonthname,
+				jdtofrench,
+				jdtogregorian,
+				jdtojewish,
+				jdtojulian,
+				jdtounix,
+				jewishtojd,
+				jpeg2wbmp,
 				"json_decode",
 				"json_encode",
 				"json_last_error",
-				"juliantojd",
+				juliantojd,
 				"kadm5_chpass_principal",
 				"kadm5_create_principal",
 				"kadm5_delete_principal",
@@ -3193,13 +3140,13 @@
 				"kadm5_get_principals",
 				"kadm5_init_with_password",
 				"kadm5_modify_principal",
-				"key",
-				"krsort",
-				"ksort",
-				"lcfirst",
+				key,
+				krsort,
+				ksort,
+				lcfirst,
 				"lcg_value",
-				"lchgrp",
-				"lchown",
+				lchgrp,
+				lchown,
 				"ldap_8859_to_t61",
 				"ldap_add",
 				"ldap_bind",
@@ -3242,24 +3189,24 @@
 				"ldap_start_tls",
 				"ldap_t61_to_8859",
 				"ldap_unbind",
-				"levenshtein",
+				levenshtein,
 				"libxml_clear_errors",
 				"libxml_disable_entity_loader",
 				"libxml_get_errors",
 				"libxml_get_last_error",
 				"libxml_set_streams_context",
 				"libxml_use_internal_errors",
-				"link",
-				"linkinfo",
-				"list",
-				"localeconv",
-				"localtime",
-				"log",
-				"log10",
-				"log1p",
-				"long2ip",
-				"lstat",
-				"ltrim",
+				link,
+				linkinfo,
+				list,
+				localeconv,
+				localtime,
+				log,
+				log10,
+				log1p,
+				long2ip,
+				lstat,
+				ltrim,
 				"lzf_compress",
 				"lzf_decompress",
 				"lzf_optimized_for",
@@ -3302,7 +3249,7 @@
 				"m_validateidentifier",
 				"m_verifyconnection",
 				"m_verifysslcert",
-				"mail",
+				mail,
 				"mailparse_determine_best_xfer_encoding",
 				"mailparse_msg_create",
 				"mailparse_msg_extract_part_file",
@@ -3317,7 +3264,7 @@
 				"mailparse_rfc822_parse_addresses",
 				"mailparse_stream_encode",
 				"mailparse_uudecode_all",
-				"max",
+				max,
 				"maxdb_affected_rows",
 				"maxdb_autocommit",
 				"maxdb_change_user",
@@ -3499,7 +3446,7 @@
 				"mcrypt_module_self_test",
 				"mcrypt_ofb",
 				"md5_file",
-				"md5",
+				md5,
 				"mdecrypt_generic",
 				"Memcache::add",
 				"Memcache::addServer",
@@ -3522,24 +3469,24 @@
 				"Memcache::setServerParams",
 				"memory_get_peak_usage",
 				"memory_get_usage",
-				"metaphone",
+				metaphone,
 				"method_exists",
 				"mhash_count",
 				"mhash_get_block_size",
 				"mhash_get_hash_name",
 				"mhash_keygen_s2k",
-				"mhash",
-				"microtime",
+				mhash,
+				microtime,
 				"mime_content_type",
-				"min",
+				min,
 				"ming_keypress",
 				"ming_setcubicthreshold",
 				"ming_setscale",
 				"ming_setswfcompression",
 				"ming_useconstants",
 				"ming_useswfversion",
-				"mkdir",
-				"mktime",
+				mkdir,
+				mktime,
 				"money_format",
 				"move_uploaded_file",
 				"mqseries_back",
@@ -3704,8 +3651,8 @@
 				"mysqli_rpl_query_type",
 				"mysqli_send_query",
 				"mysqli_slave_query",
-				"natcasesort",
-				"natsort",
+				natcasesort,
+				natsort,
 				"ncurses_addch",
 				"ncurses_addchnstr",
 				"ncurses_addchstr",
@@ -3982,10 +3929,10 @@
 				"newt_win_message",
 				"newt_win_messagev",
 				"newt_win_ternary",
-				"next",
-				"ngettext",
+				next,
+				ngettext,
 				"nl_langinfo",
-				"nl2br",
+				nl2br,
 				"notes_body",
 				"notes_copy_db",
 				"notes_create_db",
@@ -4003,7 +3950,7 @@
 				"nsapi_request_headers",
 				"nsapi_response_headers",
 				"nsapi_virtual",
-				"nthmac",
+				nthmac,
 				"number_format",
 				"oauth_urlencode",
 				"oauth_get_sbs",
@@ -4030,12 +3977,12 @@
 				"oci_bind_by_name",
 				"oci_cancel",
 				"oci_close",
-				"append",
-				"assign",
-				"assignElem",
-				"getElem",
-				"free",
-				"size",
+				append,
+				assign,
+				assignElem,
+				getElem,
+				free,
+				size,
 				"oci_commit",
 				"oci_connect",
 				"oci_define_by_name",
@@ -4056,26 +4003,26 @@
 				"oci_field_type",
 				"oci_free_statement",
 				"oci_internal_debug",
-				"append",
-				"close",
+				append,
+				close,
 				"oci_lob_copy",
-				"eof",
-				"erase",
-				"export",
-				"free",
-				"getBuffering",
-				"import",
+				eof,
+				erase,
+				export,
+				free,
+				getBuffering,
+				import,
 				"oci_lob_is_equal",
-				"load",
-				"read",
-				"save",
-				"seek",
-				"setBuffering",
-				"size",
-				"tell",
-				"truncate",
-				"write",
-				"writeTemporary",
+				load,
+				read,
+				save,
+				seek,
+				setBuffering,
+				size,
+				tell,
+				truncate,
+				write,
+				writeTemporary,
 				"oci_new_collection",
 				"oci_new_connect",
 				"oci_new_cursor",
@@ -4095,8 +4042,8 @@
 				"oci_set_module_name",
 				"oci_set_prefetch",
 				"oci_statement_type",
-				"ocifetchinto",
-				"octdec",
+				ocifetchinto,
+				octdec,
 				"odbc_autocommit",
 				"odbc_binmode",
 				"odbc_close_all",
@@ -4163,8 +4110,8 @@
 				"openal_source_set",
 				"openal_source_stop",
 				"openal_stream",
-				"opendir",
-				"openlog",
+				opendir,
+				openlog,
 				"openssl_csr_export_to_file",
 				"openssl_csr_export",
 				"openssl_csr_get_public_key",
@@ -4209,10 +4156,10 @@
 				"openssl_x509_free",
 				"openssl_x509_parse",
 				"openssl_x509_read",
-				"ord",
+				ord,
 				"output_add_rewrite_var",
 				"output_reset_rewrite_vars",
-				"overload",
+				overload,
 				"override_function",
 				"ovrimos_close",
 				"ovrimos_commit",
@@ -4234,7 +4181,7 @@
 				"ovrimos_result_all",
 				"ovrimos_result",
 				"ovrimos_rollback",
-				"pack",
+				pack,
 				"parse_ini_file",
 				"parse_ini_string",
 				"parse_str",
@@ -4242,9 +4189,9 @@
 				"parsekit_compile_file",
 				"parsekit_compile_string",
 				"parsekit_func_arginfo",
-				"passthru",
-				"pathinfo",
-				"pclose",
+				passthru,
+				pathinfo,
+				pclose,
 				"pcntl_alarm",
 				"pcntl_exec",
 				"pcntl_fork",
@@ -4420,8 +4367,8 @@
 				"PDO::pgsqlLOBOpen",
 				"PDO::pgsqlLOBUnlink",
 				"sqliteCreateAggregate",
-				"sqliteCreateFunction",
-				"pfsockopen",
+				sqliteCreateFunction,
+				pfsockopen,
 				"pg_affected_rows",
 				"pg_cancel_query",
 				"pg_client_encoding",
@@ -4511,12 +4458,12 @@
 				"php_sapi_name",
 				"php_strip_whitespace",
 				"php_uname",
-				"phpcredits",
-				"phpinfo",
-				"phpversion",
-				"pi",
-				"png2wbmp",
-				"popen",
+				phpcredits,
+				phpinfo,
+				phpversion,
+				pi,
+				png2wbmp,
+				popen,
 				"posix_access",
 				"posix_ctermid",
 				"posix_get_last_error",
@@ -4552,7 +4499,7 @@
 				"posix_times",
 				"posix_ttyname",
 				"posix_uname",
-				"pow",
+				pow,
 				"preg_filter",
 				"preg_grep",
 				"preg_last_error",
@@ -4562,9 +4509,9 @@
 				"preg_replace_callback",
 				"preg_replace",
 				"preg_split",
-				"prev",
+				prev,
 				"print_r",
-				"print",
+				print,
 				"printer_abort",
 				"printer_close",
 				"printer_create_brush",
@@ -4596,7 +4543,7 @@
 				"printer_start_doc",
 				"printer_start_page",
 				"printer_write",
-				"printf",
+				printf,
 				"proc_close",
 				"proc_get_status",
 				"proc_nice",
@@ -4700,7 +4647,7 @@
 				"pspell_save_wordlist",
 				"pspell_store_replacement",
 				"pspell_suggest",
-				"putenv",
+				putenv,
 				"px_close",
 				"px_create_fp",
 				"px_date2string",
@@ -4730,8 +4677,8 @@
 				"qdom_tree",
 				"quoted_printable_decode",
 				"quoted_printable_encode",
-				"quotemeta",
-				"rad2deg",
+				quotemeta,
+				rad2deg,
 				"radius_acct_open",
 				"radius_add_server",
 				"radius_auth_open",
@@ -4757,13 +4704,13 @@
 				"radius_send_request",
 				"radius_server_secret",
 				"radius_strerror",
-				"rand",
-				"range",
-				"rawurldecode",
-				"rawurlencode",
-				"readdir",
-				"readfile",
-				"readgzfile",
+				rand,
+				range,
+				rawurldecode,
+				rawurlencode,
+				readdir,
+				readfile,
+				readgzfile,
 				"readline_add_history",
 				"readline_callback_handler_install",
 				"readline_callback_handler_remove",
@@ -4776,9 +4723,9 @@
 				"readline_read_history",
 				"readline_redisplay",
 				"readline_write_history",
-				"readline",
-				"readlink",
-				"realpath",
+				readline,
+				readlink,
+				realpath,
 				"realpath_cache_get",
 				"realpath_cache_size",
 				"recode_file",
@@ -4786,22 +4733,22 @@
 				"register_shutdown_function",
 				"register_tick_function",
 				"rename_function",
-				"rename",
-				"reset",
+				rename,
+				reset,
 				"restore_error_handler",
 				"restore_exception_handler",
 				"restore_include_path",
-				"rewind",
-				"rewinddir",
-				"rmdir",
-				"round",
+				rewind,
+				rewinddir,
+				rmdir,
+				round,
 				"rpm_close",
 				"rpm_get_tag",
 				"rpm_is_valid",
 				"rpm_open",
 				"rpm_version",
-				"rsort",
-				"rtrim",
+				rsort,
+				rtrim,
 				"runkit_class_adopt",
 				"runkit_class_emancipate",
 				"runkit_constant_add",
@@ -4823,26 +4770,26 @@
 				"runkit_return_value_used",
 				"runkit_sandbox_output_handler",
 				"runkit_superglobals",
-				"commit",
-				"connect",
+				commit,
+				connect,
 				"__construct",
-				"disconnect",
-				"isConnected",
-				"peek",
-				"peekAll",
-				"receive",
-				"remove",
-				"rollback",
-				"send",
-				"setDebug",
-				"subscribe",
-				"unsubscribe",
+				disconnect,
+				isConnected,
+				peek,
+				peekAll,
+				receive,
+				remove,
+				rollback,
+				send,
+				setDebug,
+				subscribe,
+				unsubscribe,
 				"__construct",
 				"SCA::createDataObject",
 				"SCA::getService",
 				"SCA_LocalProxy::createDataObject",
 				"SCA_SoapProxy::createDataObject",
-				"scandir",
+				scandir,
 				"SDO_DAS_ChangeSummary::beginLogging",
 				"SDO_DAS_ChangeSummary::endLogging",
 				"SDO_DAS_ChangeSummary::getChangedDataObjects",
@@ -4915,7 +4862,7 @@
 				"sem_get",
 				"sem_release",
 				"sem_remove",
-				"serialize",
+				serialize,
 				"session_cache_expire",
 				"session_cache_limiter",
 				"session_decode",
@@ -4946,12 +4893,12 @@
 				"set_include_path",
 				"set_magic_quotes_runtime",
 				"set_time_limit",
-				"setcookie",
-				"setlocale",
-				"setrawcookie",
-				"settype",
+				setcookie,
+				setlocale,
+				setrawcookie,
+				settype,
 				"sha1_file",
-				"sha1",
+				sha1,
 				"shell_exec",
 				"shm_attach",
 				"shm_detach",
@@ -4966,14 +4913,14 @@
 				"shmop_read",
 				"shmop_size",
 				"shmop_write",
-				"shuffle",
+				shuffle,
 				"similar_text",
 				"simplexml_import_dom",
 				"simplexml_load_file",
 				"simplexml_load_string",
-				"sin",
-				"sinh",
-				"sleep",
+				sin,
+				sinh,
+				sleep,
 				"snmp_get_quick_print",
 				"snmp_get_valueretrieval",
 				"snmp_read_mib",
@@ -4982,12 +4929,12 @@
 				"snmp_set_oid_output_format",
 				"snmp_set_quick_print",
 				"snmp_set_valueretrieval",
-				"snmpget",
-				"snmpgetnext",
-				"snmprealwalk",
-				"snmpset",
-				"snmpwalk",
-				"snmpwalkoid",
+				snmpget,
+				snmpgetnext,
+				snmprealwalk,
+				snmpset,
+				snmpwalk,
+				snmpwalkoid,
 				"socket_accept",
 				"socket_bind",
 				"socket_clear_error",
@@ -5014,8 +4961,8 @@
 				"socket_strerror",
 				"socket_write",
 				"solr_get_version",
-				"sort",
-				"soundex",
+				sort,
+				soundex,
 				"spl_autoload_call",
 				"spl_autoload_extensions",
 				"spl_autoload_functions",
@@ -5024,9 +4971,9 @@
 				"spl_autoload",
 				"spl_classes",
 				"spl_object_hash",
-				"split",
-				"spliti",
-				"sprintf",
+				split,
+				spliti,
+				sprintf,
 				"sql_regcase",
 				"sqlite_array_query",
 				"sqlite_busy_timeout",
@@ -5067,9 +5014,9 @@
 				"sqlite_udf_encode_binary",
 				"sqlite_unbuffered_query",
 				"sqlite_valid",
-				"sqrt",
-				"srand",
-				"sscanf",
+				sqrt,
+				srand,
+				sscanf,
 				"ssh2_auth_hostbased_file",
 				"ssh2_auth_none",
 				"ssh2_auth_password",
@@ -5097,7 +5044,7 @@
 				"ssh2_sftp",
 				"ssh2_shell",
 				"ssh2_tunnel",
-				"stat",
+				stat,
 				"stats_absolute_deviation",
 				"stats_cdf_beta",
 				"stats_cdf_binomial",
@@ -5177,10 +5124,10 @@
 				"str_shuffle",
 				"str_split",
 				"str_word_count",
-				"strcasecmp",
-				"strcmp",
-				"strcoll",
-				"strcspn",
+				strcasecmp,
+				strcmp,
+				strcoll,
+				strcspn,
 				"stream_bucket_append",
 				"stream_bucket_make_writeable",
 				"stream_bucket_new",
@@ -5224,36 +5171,36 @@
 				"stream_wrapper_register",
 				"stream_wrapper_restore",
 				"stream_wrapper_unregister",
-				"strftime",
+				strftime,
 				"strip_tags",
-				"stripcslashes",
-				"stripos",
-				"stripslashes",
-				"stristr",
-				"strlen",
-				"strnatcasecmp",
-				"strnatcmp",
-				"strncasecmp",
-				"strncmp",
-				"strpbrk",
-				"strpos",
-				"strptime",
-				"strrchr",
-				"strrev",
-				"strripos",
-				"strrpos",
-				"strspn",
-				"strstr",
-				"strtok",
-				"strtolower",
-				"strtotime",
-				"strtoupper",
-				"strtr",
-				"strval",
+				stripcslashes,
+				stripos,
+				stripslashes,
+				stristr,
+				strlen,
+				strnatcasecmp,
+				strnatcmp,
+				strncasecmp,
+				strncmp,
+				strpbrk,
+				strpos,
+				strptime,
+				strrchr,
+				strrev,
+				strripos,
+				strrpos,
+				strspn,
+				strstr,
+				strtok,
+				strtolower,
+				strtotime,
+				strtoupper,
+				strtr,
+				strval,
 				"substr_compare",
 				"substr_count",
 				"substr_replace",
-				"substr",
+				substr,
 				"svn_add",
 				"svn_auth_get_parameter",
 				"svn_auth_set_parameter",
@@ -5370,145 +5317,145 @@
 				"swf_viewport",
 				"__construct",
 				"__construct",
-				"getHeight",
-				"getWidth",
-				"addAction",
-				"addASound",
-				"addShape",
+				getHeight,
+				getWidth,
+				addAction,
+				addASound,
+				addShape,
 				"__construct",
-				"setAction",
-				"setDown",
-				"setHit",
-				"setMenu",
-				"setOver",
-				"setUp",
-				"addAction",
-				"addColor",
-				"endMask",
-				"getRot",
-				"getX",
-				"getXScale",
-				"getXSkew",
-				"getY",
-				"getYScale",
-				"getYSkew",
-				"move",
-				"moveTo",
-				"multColor",
-				"remove",
-				"rotate",
-				"rotateTo",
-				"scale",
-				"scaleTo",
-				"setDepth",
-				"setMaskLevel",
-				"setMatrix",
-				"setName",
-				"setRatio",
-				"skewX",
-				"skewXTo",
-				"skewY",
-				"skewYTo",
-				"moveTo",
-				"rotateTo",
-				"scaleTo",
-				"skewXTo",
-				"skewYTo",
+				setAction,
+				setDown,
+				setHit,
+				setMenu,
+				setOver,
+				setUp,
+				addAction,
+				addColor,
+				endMask,
+				getRot,
+				getX,
+				getXScale,
+				getXSkew,
+				getY,
+				getYScale,
+				getYSkew,
+				move,
+				moveTo,
+				multColor,
+				remove,
+				rotate,
+				rotateTo,
+				scale,
+				scaleTo,
+				setDepth,
+				setMaskLevel,
+				setMatrix,
+				setName,
+				setRatio,
+				skewX,
+				skewXTo,
+				skewY,
+				skewYTo,
+				moveTo,
+				rotateTo,
+				scaleTo,
+				skewXTo,
+				skewYTo,
 				"__construct",
-				"getAscent",
-				"getDescent",
-				"getLeading",
-				"getShape",
-				"getUTF8Width",
-				"getWidth",
-				"addChars",
-				"addUTF8Chars",
-				"addEntry",
+				getAscent,
+				getDescent,
+				getLeading,
+				getShape,
+				getUTF8Width,
+				getWidth,
+				addChars,
+				addUTF8Chars,
+				addEntry,
 				"__construct",
 				"__construct",
-				"getShape1",
-				"getShape2",
-				"add",
-				"addExport",
-				"addFont",
+				getShape1,
+				getShape2,
+				add,
+				addExport,
+				addFont,
 				"__construct",
-				"importChar",
-				"importFont",
-				"labelFrame",
-				"nextFrame",
-				"output",
-				"remove",
-				"save",
-				"saveToFile",
-				"setbackground",
-				"setDimension",
-				"setFrames",
-				"setRate",
-				"startSound",
-				"stopSound",
-				"streamMP3",
-				"writeExports",
+				importChar,
+				importFont,
+				labelFrame,
+				nextFrame,
+				output,
+				remove,
+				save,
+				saveToFile,
+				setbackground,
+				setDimension,
+				setFrames,
+				setRate,
+				startSound,
+				stopSound,
+				streamMP3,
+				writeExports,
 				"__construct",
-				"addFill",
+				addFill,
 				"__construct",
-				"drawArc",
-				"drawCircle",
-				"drawCubic",
-				"drawCubicTo",
-				"drawCurve",
-				"drawCurveTo",
-				"drawGlyph",
-				"drawLine",
-				"drawLineTo",
-				"movePen",
-				"movePenTo",
-				"setLeftFill",
-				"setLine",
-				"setRightFill",
+				drawArc,
+				drawCircle,
+				drawCubic,
+				drawCubicTo,
+				drawCurve,
+				drawCurveTo,
+				drawGlyph,
+				drawLine,
+				drawLineTo,
+				movePen,
+				movePenTo,
+				setLeftFill,
+				setLine,
+				setRightFill,
 				"__construct",
-				"loopCount",
-				"loopInPoint",
-				"loopOutPoint",
-				"noMultiple",
-				"add",
+				loopCount,
+				loopInPoint,
+				loopOutPoint,
+				noMultiple,
+				add,
 				"__construct",
-				"labelFrame",
-				"nextFrame",
-				"remove",
-				"setFrames",
-				"startSound",
-				"stopSound",
-				"addString",
-				"addUTF8String",
+				labelFrame,
+				nextFrame,
+				remove,
+				setFrames,
+				startSound,
+				stopSound,
+				addString,
+				addUTF8String,
 				"__construct",
-				"getAscent",
-				"getDescent",
-				"getLeading",
-				"getUTF8Width",
-				"getWidth",
-				"moveTo",
-				"setColor",
-				"setFont",
-				"setHeight",
-				"setSpacing",
-				"addChars",
-				"addString",
-				"align",
+				getAscent,
+				getDescent,
+				getLeading,
+				getUTF8Width,
+				getWidth,
+				moveTo,
+				setColor,
+				setFont,
+				setHeight,
+				setSpacing,
+				addChars,
+				addString,
+				align,
 				"__construct",
-				"setBounds",
-				"setColor",
-				"setFont",
-				"setHeight",
-				"setIndentation",
-				"setLeftMargin",
-				"setLineSpacing",
-				"setMargins",
-				"setName",
-				"setPadding",
-				"setRightMargin",
+				setBounds,
+				setColor,
+				setFont,
+				setHeight,
+				setIndentation,
+				setLeftMargin,
+				setLineSpacing,
+				setMargins,
+				setName,
+				setPadding,
+				setRightMargin,
 				"__construct",
-				"getNumFrames",
-				"setDimension",
+				getNumFrames,
+				setDimension,
 				"Swish::__construct",
 				"Swish->getMetaList",
 				"Swish->getPropertyList",
@@ -5551,16 +5498,16 @@
 				"sybase_select_db",
 				"sybase_set_message_handler",
 				"sybase_unbuffered_query",
-				"symlink",
+				symlink,
 				"sys_get_temp_dir",
 				"sys_getloadavg",
-				"syslog",
-				"system",
-				"tan",
-				"tanh",
+				syslog,
+				system,
+				tan,
+				tanh,
 				"tcpwrap_check",
-				"tempnam",
-				"textdomain",
+				tempnam,
+				textdomain,
 				"tidy_access_count",
 				"tidy_config_count",
 				"tidy::diagnose",
@@ -5575,19 +5522,19 @@
 				"tidy_warning_count",
 				"time_nanosleep",
 				"time_sleep_until",
-				"time",
+				time,
 				"timezone_name_from_abbr",
 				"timezone_open",
 				"timezone_version_get",
-				"tmpfile",
+				tmpfile,
 				"token_get_all",
 				"token_name",
-				"touch",
+				touch,
 				"trigger_error",
-				"trim",
-				"uasort",
-				"ucfirst",
-				"ucwords",
+				trim,
+				uasort,
+				ucfirst,
+				ucwords,
 				"udm_add_search_limit",
 				"udm_alloc_agent_array",
 				"udm_alloc_agent",
@@ -5612,26 +5559,26 @@
 				"udm_load_ispell_data",
 				"udm_open_stored",
 				"udm_set_agent_param",
-				"uksort",
-				"umask",
+				uksort,
+				umask,
 				"unicode_decode",
 				"unicode_encode",
 				"unicode_get_error_mode",
 				"unicode_get_subst_char",
 				"unicode_set_error_mode",
 				"unicode_set_subst_char",
-				"uniqid",
-				"unixtojd",
-				"unlink",
-				"unpack",
+				uniqid,
+				unixtojd,
+				unlink,
+				unpack,
 				"unregister_tick_function",
-				"unserialize",
-				"unset",
-				"urldecode",
-				"urlencode",
+				unserialize,
+				unset,
+				urldecode,
+				urlencode,
 				"use_soap_error_handler",
-				"usleep",
-				"usort",
+				usleep,
+				usort,
 				"utf8_decode",
 				"utf8_encode",
 				"var_dump",
@@ -5663,8 +5610,8 @@
 				"variant_sub",
 				"variant_xor",
 				"version_compare",
-				"vfprintf",
-				"virtual",
+				vfprintf,
+				virtual,
 				"vpopmail_add_alias_domain_ex",
 				"vpopmail_add_alias_domain",
 				"vpopmail_add_domain_ex",
@@ -5682,8 +5629,8 @@
 				"vpopmail_error",
 				"vpopmail_passwd",
 				"vpopmail_set_user_quota",
-				"vprintf",
-				"vsprintf",
+				vprintf,
+				vsprintf,
 				"w32api_deftype",
 				"w32api_init_dtype",
 				"w32api_invoke_function",
@@ -5713,7 +5660,7 @@
 				"wincache_refresh_if_changed",
 				"wincache_rplist_fileinfo",
 				"wincache_rplist_meminfo",
-				"wordwrap",
+				wordwrap,
 				"xattr_get",
 				"xattr_list",
 				"xattr_remove",
@@ -5771,48 +5718,48 @@
 				"xmlrpc_server_register_introspection_callback",
 				"xmlrpc_server_register_method",
 				"xmlrpc_set_type",
-				"endAttribute",
-				"endCData",
-				"endComment",
-				"endDocument",
-				"endDTDAttlist",
-				"endDTDElement",
-				"endDTDEntity",
-				"endDTD",
-				"endElement",
-				"endPI",
+				endAttribute,
+				endCData,
+				endComment,
+				endDocument,
+				endDTDAttlist,
+				endDTDElement,
+				endDTDEntity,
+				endDTD,
+				endElement,
+				endPI,
 				"xmlwriter_flush",
-				"fullEndElement",
-				"openMemory",
-				"openURI",
-				"outputMemory",
-				"setIndentString",
-				"setIndent",
-				"startAttributeNS",
-				"startAttribute",
-				"startCData",
-				"startComment",
-				"startDocument",
-				"startDTDAttlist",
-				"startDTDElement",
-				"startDTDEntity",
-				"startDTD",
-				"startElementNS",
-				"startElement",
-				"startPI",
-				"text",
-				"writeAttributeNS",
-				"writeAttribute",
-				"writeCData",
-				"writeComment",
-				"writeDTDAttlist",
-				"writeDTDElement",
-				"writeDTDEntity",
-				"writeDTD",
-				"writeElementNS",
-				"writeElement",
-				"writePI",
-				"writeRaw",
+				fullEndElement,
+				openMemory,
+				openURI,
+				outputMemory,
+				setIndentString,
+				setIndent,
+				startAttributeNS,
+				startAttribute,
+				startCData,
+				startComment,
+				startDocument,
+				startDTDAttlist,
+				startDTDElement,
+				startDTDEntity,
+				startDTD,
+				startElementNS,
+				startElement,
+				startPI,
+				text,
+				writeAttributeNS,
+				writeAttribute,
+				writeCData,
+				writeComment,
+				writeDTDAttlist,
+				writeDTDElement,
+				writeDTDEntity,
+				writeDTD,
+				writeElementNS,
+				writeElement,
+				writePI,
+				writeRaw,
 				"xpath_eval_expression",
 				"xpath_eval",
 				"xpath_new_context",
@@ -5916,17 +5863,16 @@
 				"ZipArchive::unchangeIndex",
 				"ZipArchive::unchangeName",
 				"zlib_get_coding_type",
-             );
-            End = "(";
-            Type = "xcode.syntax.identifier.function.system";
-        };
-    },
-
-    {
-        Identifier = "xcode.lang.phpe.systemconstants";
-        Syntax = {
-            StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_::";
-            Words = (
+			);
+			End = "(";
+			Type = "xcode.syntax.keyword";
+		};
+	},
+	{
+		Identifier = "xcode.lang.php.systemconstants";
+		Syntax = {
+			StartChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_::";
+			Words = (
 				"FUNCTION_TRACE",
 				"ARGS_TRACE",
 				"ASSIGNMENT_TRACE",
@@ -6640,15 +6586,15 @@
 				"EXP_EOF",
 				"EXP_TIMEOUT",
 				"EXP_FULLBUFFER",
-				"FAMChanged",
-				"FAMDeleted",
-				"FAMStartExecuting",
-				"FAMStopExecuting",
-				"FAMCreated",
-				"FAMMoved",
-				"FAMAcknowledge",
-				"FAMExists",
-				"FAMEndExist",
+				FAMChanged,
+				FAMDeleted,
+				FAMStartExecuting,
+				FAMStopExecuting,
+				FAMCreated,
+				FAMMoved,
+				FAMAcknowledge,
+				FAMExists,
+				FAMEndExist,
 				"FBSQL_ASSOC",
 				"FBSQL_NUM",
 				"FBSQL_BOTH",
@@ -6668,33 +6614,33 @@
 				"FBSQL_NOEXEC",
 				"FBSQL_LOB_DIRECT",
 				"FBSQL_LOB_HANDLE",
-				"FDFValue",
-				"FDFStatus",
-				"FDFFile",
-				"FDFID",
-				"FDFFf",
-				"FDFSetFf",
-				"FDFClearFf",
-				"FDFFlags",
-				"FDFSetF",
-				"FDFClrF",
-				"FDFAP",
-				"FDFAS",
-				"FDFAction",
-				"FDFAA",
-				"FDFAPRef",
-				"FDFIF",
-				"FDFEnter",
-				"FDFExit",
-				"FDFDown",
-				"FDFUp",
-				"FDFFormat",
-				"FDFValidate",
-				"FDFKeystroke",
-				"FDFCalculate",
-				"FDFNormalAP",
-				"FDFRolloverAP",
-				"FDFDownAP",
+				FDFValue,
+				FDFStatus,
+				FDFFile,
+				FDFID,
+				FDFFf,
+				FDFSetFf,
+				FDFClearFf,
+				FDFFlags,
+				FDFSetF,
+				FDFClrF,
+				FDFAP,
+				FDFAS,
+				FDFAction,
+				FDFAA,
+				FDFAPRef,
+				FDFIF,
+				FDFEnter,
+				FDFExit,
+				FDFDown,
+				FDFUp,
+				FDFFormat,
+				FDFValidate,
+				FDFKeystroke,
+				FDFCalculate,
+				FDFNormalAP,
+				FDFRolloverAP,
+				FDFDownAP,
 				"FILEINFO_NONE",
 				"FILEINFO_SYMLINK",
 				"FILEINFO_MIME_TYPE",
@@ -6800,9 +6746,9 @@
 				"FTP_FAILED",
 				"FTP_FINISHED",
 				"FTP_MOREDATA",
-				"FALSE",
-				"TRUE",
-				"NULL",
+				FALSE,
+				TRUE,
+				NULL,
 				"GEARMAN_SUCCESS",
 				"GEARMAN_IO_WAIT",
 				"GEARMAN_ERRNO",
@@ -7843,7 +7789,7 @@
 				"imagick::DITHERMETHOD_NO",
 				"imagick::DITHERMETHOD_RIEMERSMA",
 				"imagick::DITHERMETHOD_FLOYDSTEINBERG",
-				"NIL",
+				NIL,
 				"OP_DEBUG",
 				"OP_READONLY",
 				"OP_ANONYMOUS",
@@ -7879,27 +7825,27 @@
 				"LATT_NOSELECT",
 				"LATT_MARKED",
 				"LATT_UNMARKED",
-				"SORTDATE",
-				"SORTARRIVAL",
-				"SORTFROM",
-				"SORTSUBJECT",
-				"SORTTO",
-				"SORTCC",
-				"SORTSIZE",
-				"TYPETEXT",
-				"TYPEMULTIPART",
-				"TYPEMESSAGE",
-				"TYPEAPPLICATION",
-				"TYPEAUDIO",
-				"TYPEIMAGE",
-				"TYPEVIDEO",
-				"TYPEOTHER",
-				"ENC7BIT",
-				"ENC8BIT",
-				"ENCBINARY",
-				"ENCBASE64",
-				"ENCQUOTEDPRINTABLE",
-				"ENCOTHER",
+				SORTDATE,
+				SORTARRIVAL,
+				SORTFROM,
+				SORTSUBJECT,
+				SORTTO,
+				SORTCC,
+				SORTSIZE,
+				TYPETEXT,
+				TYPEMULTIPART,
+				TYPEMESSAGE,
+				TYPEAPPLICATION,
+				TYPEAUDIO,
+				TYPEIMAGE,
+				TYPEVIDEO,
+				TYPEOTHER,
+				ENC7BIT,
+				ENC8BIT,
+				ENCBINARY,
+				ENCBASE64,
+				ENCQUOTEDPRINTABLE,
+				ENCOTHER,
 				"IMAP_OPENTIMEOUT",
 				"IMAP_READTIMEOUT",
 				"IMAP_WRITETIMEOUT",
@@ -7907,7 +7853,7 @@
 				"LATT_REFERRAL",
 				"LATT_HASCHILDREN",
 				"LATT_HASNOCHILDREN",
-				"TYPEMODEL",
+				TYPEMODEL,
 				"IMAP_GC_ELT",
 				"IMAP_GC_ENV",
 				"IMAP_GC_TEXTS",
@@ -8115,8 +8061,8 @@
 				"PHP_ROUND_HALF_DOWN",
 				"PHP_ROUND_HALF_EVEN",
 				"PHP_ROUND_HALF_ODD",
-				"NAN",
-				"INF",
+				NAN,
+				INF,
 				"MB_OVERLOAD_MAIL",
 				"MB_OVERLOAD_STRING",
 				"MB_OVERLOAD_REGEX",
@@ -8449,15 +8395,15 @@
 				"MSSQL_ASSOC",
 				"MSSQL_NUM",
 				"MSSQL_BOTH",
-				"SQLTEXT",
-				"SQLVARCHAR",
-				"SQLCHAR",
-				"SQLINT1",
-				"SQLINT2",
-				"SQLINT4",
-				"SQLBIT",
-				"SQLFLT4",
-				"SQLFLT8",
+				SQLTEXT,
+				SQLVARCHAR,
+				SQLCHAR,
+				SQLINT1,
+				SQLINT2,
+				SQLINT4,
+				SQLBIT,
+				SQLFLT4,
+				SQLFLT8,
 				"MYSQL_CLIENT_COMPRESS",
 				"MYSQL_CLIENT_IGNORE_SPACE",
 				"MYSQL_CLIENT_INTERACTIVE",
@@ -8823,46 +8769,46 @@
 				"PARSEKIT_ZEND_UNSET_DIM_OBJ",
 				"PARSEKIT_ZEND_UNSET_VAR",
 				"PARSEKIT_ZEND_VERIFY_ABSTRACT_CLASS",
-				"WNOHANG",
-				"WUNTRACED",
+				WNOHANG,
+				WUNTRACED,
 				"SIG_IGN",
 				"SIG_DFL",
 				"SIG_ERR",
-				"SIGHUP",
-				"SIGINT",
-				"SIGQUIT",
-				"SIGILL",
-				"SIGTRAP",
-				"SIGABRT",
-				"SIGIOT",
-				"SIGBUS",
-				"SIGFPE",
-				"SIGKILL",
-				"SIGUSR1",
-				"SIGSEGV",
-				"SIGUSR2",
-				"SIGPIPE",
-				"SIGALRM",
-				"SIGTERM",
-				"SIGSTKFLT",
-				"SIGCLD",
-				"SIGCHLD",
-				"SIGCONT",
-				"SIGSTOP",
-				"SIGTSTP",
-				"SIGTTIN",
-				"SIGTTOU",
-				"SIGURG",
-				"SIGXCPU",
-				"SIGXFSZ",
-				"SIGVTALRM",
-				"SIGPROF",
-				"SIGWINCH",
-				"SIGPOLL",
-				"SIGIO",
-				"SIGPWR",
-				"SIGSYS",
-				"SIGBABY",
+				SIGHUP,
+				SIGINT,
+				SIGQUIT,
+				SIGILL,
+				SIGTRAP,
+				SIGABRT,
+				SIGIOT,
+				SIGBUS,
+				SIGFPE,
+				SIGKILL,
+				SIGUSR1,
+				SIGSEGV,
+				SIGUSR2,
+				SIGPIPE,
+				SIGALRM,
+				SIGTERM,
+				SIGSTKFLT,
+				SIGCLD,
+				SIGCHLD,
+				SIGCONT,
+				SIGSTOP,
+				SIGTSTP,
+				SIGTTIN,
+				SIGTTOU,
+				SIGURG,
+				SIGXCPU,
+				SIGXFSZ,
+				SIGVTALRM,
+				SIGPROF,
+				SIGWINCH,
+				SIGPOLL,
+				SIGIO,
+				SIGPWR,
+				SIGSYS,
+				SIGBABY,
 				"SI_MSGGQ",
 				"CLD_CONTINUED",
 				"PREG_PATTERN_ORDER",
@@ -9347,7 +9293,7 @@
 				"D_FMT",
 				"T_FMT",
 				"T_FMT_AMPM",
-				"ERA",
+				ERA,
 				"ERA_YEAR",
 				"ERA_D_T_FMT",
 				"ERA_D_FMT",
@@ -9355,7 +9301,7 @@
 				"ALT_DIGITS",
 				"INT_CURR_SYMBOL",
 				"CURRENCY_SYMBOL",
-				"CRNCYSTR",
+				CRNCYSTR,
 				"MON_DECIMAL_POINT",
 				"MON_THOUSANDS_SEP",
 				"MON_GROUPING",
@@ -9370,15 +9316,15 @@
 				"P_SIGN_POSN",
 				"N_SIGN_POSN",
 				"DECIMAL_POINT",
-				"RADIXCHAR",
+				RADIXCHAR,
 				"THOUSANDS_SEP",
-				"THOUSEP",
-				"GROUPING",
-				"YESEXPR",
-				"NOEXPR",
-				"YESSTR",
-				"NOSTR",
-				"CODESET",
+				THOUSEP,
+				GROUPING,
+				YESEXPR,
+				NOEXPR,
+				YESSTR,
+				NOSTR,
+				CODESET,
 				"LOG_LOCAL0",
 				"LOG_LOCAL1",
 				"LOG_LOCAL2",
@@ -9557,7 +9503,7 @@
 				"SDO_DAS_ChangeSummary::MODIFICATION=1",
 				"SDO_DAS_ChangeSummary::ADDITION=2",
 				"SDO_DAS_ChangeSummary::DELETION=3",
-				"SID",
+				SID,
 				"SNMP_VALUE_LIBRARY",
 				"SNMP_VALUE_PLAIN",
 				"SNMP_VALUE_OBJECT",
@@ -9986,22 +9932,22 @@
 				"MOD_MATRIX",
 				"TYPE_PUSHBUTTON",
 				"TYPE_MENUBUTTON",
-				"BSHitTest",
-				"BSDown",
-				"BSOver",
-				"BSUp",
-				"OverDowntoIdle",
-				"IdletoOverDown",
-				"OutDowntoIdle",
-				"OutDowntoOverDown",
-				"OverDowntoOutDown",
-				"OverUptoOverDown",
-				"OverUptoIdle",
-				"IdletoOverUp",
-				"ButtonEnter",
-				"ButtonExit",
-				"MenuEnter",
-				"MenuExit",
+				BSHitTest,
+				BSDown,
+				BSOver,
+				BSUp,
+				OverDowntoIdle,
+				IdletoOverDown,
+				OutDowntoIdle,
+				OutDowntoOverDown,
+				OverDowntoOutDown,
+				OverUptoOverDown,
+				OverUptoIdle,
+				IdletoOverUp,
+				ButtonEnter,
+				ButtonExit,
+				MenuEnter,
+				MenuExit,
 				"Swish::META_TYPE_UNDEF",
 				"Swish::META_TYPE_STRING",
 				"Swish::META_TYPE_ULONG",
@@ -10499,8 +10445,8 @@
 				"ZIPARCHIVE::ER_DELETED",
 				"FORCE_GZIP",
 				"FORCE_DEFLATE",
-             );
-            Type = "xcode.syntax.identifier.constant.system";
-        };
-    },
+			);
+			Type = "xcode.syntax.keyword";
+		};
+	},
 )
